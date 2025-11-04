@@ -1,0 +1,125 @@
+<div class="container">
+  <div class="header">
+    <h1>Busca de Endereço por CEP</h1>
+    <p class="subtitle">Consulte endereços completos utilizando o CEP</p>
+  </div>
+
+  <div class="search-card">
+    <form [formGroup]="searchForm" (ngSubmit)="searchCep()">
+      <div class="form-group">
+        <label for="cep">CEP</label>
+        <input
+          type="text"
+          id="cep"
+          formControlName="cep"
+          placeholder="00000-000"
+          maxlength="9"
+          (input)="formatCepInput()"
+          [class.error]="
+            searchForm.get('cep')?.invalid && searchForm.get('cep')?.touched
+          "
+        />
+        <div
+          class="validation-error"
+          *ngIf="
+            searchForm.get('cep')?.invalid && searchForm.get('cep')?.touched
+          "
+        >
+          CEP deve ter 8 dígitos (formato: XXXXX-XXX)
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="isLoading || searchForm.invalid"
+        >
+          <span *ngIf="!isLoading">Buscar</span>
+          <span *ngIf="isLoading">Buscando...</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="clear()"
+          [disabled]="isLoading"
+        >
+          Limpar
+        </button>
+      </div>
+    </form>
+
+    <div class="error-message" *ngIf="errorMessage">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path
+          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+        />
+      </svg>
+      {{ errorMessage }}
+    </div>
+
+    <div class="result-card" *ngIf="address">
+      <h2>Endereço Encontrado</h2>
+
+      <div class="address-info">
+        <div class="info-row">
+          <span class="label">CEP:</span>
+          <span class="value">{{ address.cep }}</span>
+        </div>
+
+        <div class="info-row" *ngIf="address.logradouro">
+          <span class="label">Logradouro:</span>
+          <span class="value">{{ address.logradouro }}</span>
+        </div>
+
+        <div class="info-row" *ngIf="address.complemento">
+          <span class="label">Complemento:</span>
+          <span class="value">{{ address.complemento }}</span>
+        </div>
+
+        <div class="info-row" *ngIf="address.bairro">
+          <span class="label">Bairro:</span>
+          <span class="value">{{ address.bairro }}</span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">Cidade:</span>
+          <span class="value">{{ address.localidade }}</span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">UF:</span>
+          <span class="value">{{ address.uf }}</span>
+        </div>
+
+        <div class="info-row" *ngIf="address.ddd">
+          <span class="label">DDD:</span>
+          <span class="value">{{ address.ddd }}</span>
+        </div>
+
+        <div class="info-row" *ngIf="address.ibge">
+          <span class="label">Código IBGE:</span>
+          <span class="value">{{ address.ibge }}</span>
+        </div>
+
+        <div class="info-row" *ngIf="address.gia">
+          <span class="label">GIA:</span>
+          <span class="value">{{ address.gia }}</span>
+        </div>
+
+        <div class="info-row" *ngIf="address.siafi">
+          <span class="label">SIAFI:</span>
+          <span class="value">{{ address.siafi }}</span>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" (click)="viewDetails()">
+        Ver Detalhes Completos
+      </button>
+    </div>
+  </div>
+</div>

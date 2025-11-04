@@ -1,0 +1,156 @@
+<div class="container">
+  <div class="loading-spinner" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Carregando informações...</p>
+  </div>
+
+  <div class="error-container" *ngIf="!isLoading && errorMessage">
+    <div class="error-card">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path
+          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+        />
+      </svg>
+      <h2>Erro ao Buscar CEP</h2>
+      <p>{{ errorMessage }}</p>
+      <button class="btn btn-primary" (click)="searchNewCep()">
+        Fazer Nova Busca
+      </button>
+    </div>
+  </div>
+
+  <div class="details-container" *ngIf="!isLoading && address && !errorMessage">
+    <div class="header-section">
+      <button class="back-button" (click)="goBack()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path
+            d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+          />
+        </svg>
+        Voltar
+      </button>
+      <h1>Detalhes do Endereço</h1>
+      <p class="cep-badge">CEP: {{ address.cep }}</p>
+    </div>
+
+    <div class="details-card">
+      <div class="full-address">
+        <h2>Endereço Completo</h2>
+        <p class="address-text">{{ getFullAddress() }}</p>
+        <button class="btn btn-copy" (click)="copyAddress()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
+            />
+          </svg>
+          Copiar Endereço
+        </button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="details-grid">
+        <div class="detail-item">
+          <div class="detail-icon">📍</div>
+          <div class="detail-content">
+            <span class="detail-label">CEP</span>
+            <span class="detail-value">{{ address.cep }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item" *ngIf="address.logradouro">
+          <div class="detail-icon">🛣️</div>
+          <div class="detail-content">
+            <span class="detail-label">Logradouro</span>
+            <span class="detail-value">{{ address.logradouro }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item" *ngIf="address.complemento">
+          <div class="detail-icon">📝</div>
+          <div class="detail-content">
+            <span class="detail-label">Complemento</span>
+            <span class="detail-value">{{ address.complemento }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item" *ngIf="address.bairro">
+          <div class="detail-icon">🏘️</div>
+          <div class="detail-content">
+            <span class="detail-label">Bairro</span>
+            <span class="detail-value">{{ address.bairro }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon">🏙️</div>
+          <div class="detail-content">
+            <span class="detail-label">Cidade</span>
+            <span class="detail-value">{{ address.localidade }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon">🗺️</div>
+          <div class="detail-content">
+            <span class="detail-label">Estado (UF)</span>
+            <span class="detail-value">{{ address.uf }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item" *ngIf="address.ddd">
+          <div class="detail-icon">📞</div>
+          <div class="detail-content">
+            <span class="detail-label">DDD</span>
+            <span class="detail-value">{{ address.ddd }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item" *ngIf="address.ibge">
+          <div class="detail-icon">🏛️</div>
+          <div class="detail-content">
+            <span class="detail-label">Código IBGE</span>
+            <span class="detail-value">{{ address.ibge }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item" *ngIf="address.gia">
+          <div class="detail-icon">📊</div>
+          <div class="detail-content">
+            <span class="detail-label">GIA</span>
+            <span class="detail-value">{{ address.gia }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item" *ngIf="address.siafi">
+          <div class="detail-icon">🏦</div>
+          <div class="detail-content">
+            <span class="detail-label">SIAFI</span>
+            <span class="detail-value">{{ address.siafi }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn btn-secondary" (click)="goBack()">
+          Voltar para Busca
+        </button>
+        <button class="btn btn-primary" (click)="searchNewCep()">
+          Buscar Outro CEP
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
