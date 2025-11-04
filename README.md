@@ -13,8 +13,27 @@ Este é um aplicativo Angular que permite aos usuários buscar endereços comple
 - ✅ Design responsivo para mobile e desktop
 - ✅ Navegação entre páginas com roteamento
 - ✅ Interface moderna e intuitiva
+- ✅ **Sistema de temas (Light, Dark e System)**
+- ✅ **Persistência de preferências do usuário**
+- ✅ **Detecção automática de tema do sistema**
 
-## 🛠️ Tecnologias Utilizadas
+## 🎨 Temas
+
+A aplicação oferece três opções de tema visual:
+
+- **☀️ Light Mode** - Tema claro ideal para ambientes bem iluminados
+- **🌙 Dark Mode** - Tema escuro perfeito para uso noturno e economia de bateria
+- **� System** - Segue automaticamente a preferência do sistema operacional
+
+### Recursos dos Temas:
+
+- Alternância instantânea entre temas
+- Salvamento automático da preferência
+- Cores otimizadas para acessibilidade (WCAG AA)
+- Transições suaves entre mudanças
+- Detecção em tempo real de mudanças no sistema
+
+## �🛠️ Tecnologias Utilizadas
 
 - **Angular 15** - Framework principal
 - **TypeScript** - Linguagem de programação
@@ -23,6 +42,8 @@ Este é um aplicativo Angular que permite aos usuários buscar endereços comple
 - **Reactive Forms** - Formulários reativos
 - **Angular Router** - Navegação entre páginas
 - **API ViaCEP** - Consulta de CEPs brasileiros
+- **CSS Variables** - Sistema de temas dinâmico
+- **localStorage** - Persistência de preferências
 
 ## 📋 Pré-requisitos
 
@@ -63,20 +84,25 @@ src/
 │   │   │   ├── cep-search.component.ts
 │   │   │   ├── cep-search.component.html
 │   │   │   └── cep-search.component.css
-│   │   └── cep-details/          # Componente de detalhes do CEP
-│   │       ├── cep-details.component.ts
-│   │       ├── cep-details.component.html
-│   │       └── cep-details.component.css
+│   │   ├── cep-details/          # Componente de detalhes do CEP
+│   │   │   ├── cep-details.component.ts
+│   │   │   ├── cep-details.component.html
+│   │   │   └── cep-details.component.css
+│   │   └── theme-toggle/         # Componente de alternância de tema
+│   │       ├── theme-toggle.component.ts
+│   │       ├── theme-toggle.component.html
+│   │       └── theme-toggle.component.css
 │   ├── models/
 │   │   └── address.model.ts      # Interface do modelo de endereço
 │   ├── services/
 │   │   ├── via-cep.service.ts    # Serviço de integração com API
-│   │   └── via-cep.service.spec.ts
+│   │   ├── via-cep.service.spec.ts
+│   │   └── theme.service.ts      # Serviço de gerenciamento de temas
 │   ├── app-routing.module.ts     # Configuração de rotas
 │   ├── app.module.ts             # Módulo principal
 │   └── app.component.*           # Componente raiz
 ├── assets/                        # Arquivos estáticos
-└── styles.css                     # Estilos globais
+└── styles.css                     # Estilos globais com variáveis de tema
 ```
 
 ## 🔌 API Utilizada
@@ -112,12 +138,21 @@ A aplicação utiliza a [API ViaCEP](https://viacep.com.br/), que é gratuita e 
 - Tratamento de erros HTTP
 - Formatação de CEP para exibição
 
+### Serviço de Temas (`theme.service.ts`)
+
+- Gerenciamento de três temas (Light, Dark, System)
+- Persistência no localStorage
+- Observable reativo para mudanças de tema
+- Detecção automática de preferências do sistema operacional
+- Escuta mudanças em tempo real do tema do SO
+
 ### Componente de Busca (`cep-search.component`)
 
 - Formulário reativo com validação
 - Formatação automática do input
 - Loading state durante a busca
 - Exibição de resultados ou erros
+- Seletor de tema integrado
 
 ### Componente de Detalhes (`cep-details.component`)
 
@@ -125,16 +160,42 @@ A aplicação utiliza a [API ViaCEP](https://viacep.com.br/), que é gratuita e 
 - Exibição detalhada de todos os campos
 - Opção de copiar endereço completo
 - Navegação de volta para busca
+- Seletor de tema integrado
+
+### Componente de Alternância de Tema (`theme-toggle.component`)
+
+- Botões visuais para seleção de tema
+- Indicador visual do tema ativo
+- Responsivo com hide de labels em mobile
+- Acessibilidade completa (ARIA labels)
 
 ## 🎨 Design
 
 O aplicativo possui um design moderno e responsivo com:
 
-- Gradiente de fundo atraente
+- Sistema de temas adaptável (Light/Dark/System)
+- CSS Variables para customização fácil
+- Cores otimizadas para acessibilidade (WCAG AA)
+- Transições suaves entre mudanças de tema
 - Cards com sombras e efeitos hover
-- Ícones ilustrativos
+- Ícones ilustrativos (SVG)
 - Feedback visual para ações do usuário
 - Layout adaptativo para diferentes tamanhos de tela
+- Gradiente de fundo responsivo ao tema
+
+### Paleta de Cores
+
+**Tema Light:**
+
+- Background: Tons de branco (#ffffff)
+- Texto: Tons de preto (#212529)
+- Accent: Azul (#3498db)
+
+**Tema Dark:**
+
+- Background: Tons de preto (#1a1a1a)
+- Texto: Tons de branco (#f8f9fa)
+- Accent: Azul claro (#4da6ff)
 
 ## 🧪 Testes
 
@@ -163,6 +224,40 @@ Os arquivos de build serão gerados no diretório `dist/`.
 - ✅ Responsividade mobile-first
 - ✅ Validação de formulários
 - ✅ Loading states e feedback ao usuário
+- ✅ Sistema de temas com CSS Variables
+- ✅ Persistência de preferências do usuário
+- ✅ Acessibilidade (WCAG AA)
+- ✅ Performance otimizada
+
+## 📚 Documentação Adicional
+
+- **[SISTEMA-DE-TEMAS.md](./SISTEMA-DE-TEMAS.md)** - Documentação completa do sistema de temas
+- **[DOCUMENTACAO-TECNICA.md](./DOCUMENTACAO-TECNICA.md)** - Arquitetura e detalhes técnicos
+- **[CEPS-TESTE.md](./CEPS-TESTE.md)** - Lista de CEPs para teste
+
+## 💡 Como Usar
+
+### Buscando um CEP
+
+1. Na página inicial, digite um CEP válido (8 dígitos)
+2. O CEP será formatado automaticamente (XXXXX-XXX)
+3. Clique em "Buscar" ou pressione Enter
+4. O endereço será exibido imediatamente
+5. Clique em "Ver Detalhes Completos" para informações adicionais
+
+### Alternando Temas
+
+1. Localize os botões de tema no topo da página
+2. Clique em **Light** (☀️) para tema claro
+3. Clique em **Dark** (🌙) para tema escuro
+4. Clique em **System** (💻) para seguir o tema do sistema operacional
+5. Sua preferência será salva automaticamente
+
+### Navegação
+
+- Use o botão "Voltar" para retornar à busca
+- Use "Buscar Outro CEP" para nova consulta
+- O histórico do navegador funciona normalmente
 
 ## 🤝 Contribuindo
 
